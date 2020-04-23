@@ -1,0 +1,295 @@
+from tkinter import *
+import random 
+
+class Hero():
+
+    def __init__(self, name):
+        self.name = name
+        self.level = 0
+        self.XP = 100
+        self.experience = 0
+        self.endurance = 50
+        self.mana = 30
+
+        self.attack = 5
+        self.magic_attack = 5
+        self.protection = 2
+        self.magic_protection = 0
+
+        self.XP_statik = 100
+        self.endurance_statik = 50
+        self.mana_statik = 30
+
+        self.attack_statik = 5
+        self.magic_attack_statik = 5
+        self.protection_statik = 2
+        self.magic_protection_statik = 0
+
+        self.class_hero_statik = "отсутствует"
+        self.class_hero = "Класс: " + self.class_hero_statik
+
+    def level_up(self):
+        self.level += 1
+
+    def info_hero(self):
+        
+        info_name = "Имя: " + self.name
+        info_level = "Уровень: " + str(self.level)
+        info_XP = "XP: " + str(int(self.XP + 10 * self.level)) + "/" + str(int(self.XP_statik + 10 * self.level))
+        info_experience = "Опыт: " + str(self.experience)
+        info_endurance = "Выносливость: " + str(int(self.endurance + 5 * self.level)) + "/" + str(int(self.endurance_statik + 5 * self.level))
+        info_mana = "Мана: " + str(int(self.mana + 5 * self.level)) + "/" + str(int(self.mana_statik + 5 * self.level))
+
+        info_attack = "Атака: " + str(self.attack)
+        info_magic_attack ="Магическая атака: " + str(self.magic_attack)
+        info_protection = "Защита: " + str(self.protection)
+        info_magic_protectionm = "Магическая защита: " + str(self.magic_protection)
+
+        screen_info_hero_name = Label(root, text=str(info_name), bg="grey80")
+        screen_info_hero_level = Label(root, text=str(info_level), bg="grey80")
+        screen_info_hero_XP = Label(root, text=str(info_XP), bg="grey80")
+        screen_info_hero_experience = Label(root, text=str(info_experience), bg="grey80")
+        screen_info_hero_endurance = Label(root, text=str(info_endurance), bg="grey80")
+        screen_info_hero_mana = Label(root, text=str(info_mana), bg="grey80")
+        screen_info_hero_class = Label(root, text=str(self.class_hero), bg="grey80")
+
+        screen_info_hero_name.grid(row=0, column=0, sticky=W)
+        screen_info_hero_level.grid(row=1, column=0, sticky=W)
+        screen_info_hero_XP.grid(row=2, column=0, sticky=W)
+        screen_info_hero_experience.grid(row=3, column=0, sticky=W)
+        screen_info_hero_endurance.grid(row=4, column=0, sticky=W)
+        screen_info_hero_mana.grid(row=5, column=0, sticky=W)
+        screen_info_hero_class.grid(row=6, column=0, sticky=W)
+
+        screen_info_hero_attack = Label(root, text=str(info_attack), bg="grey80")
+        screen_info_hero_magic_attack = Label(root, text=str(info_magic_attack), bg="grey80")
+        screen_info_hero_protection = Label(root, text=str(info_protection), bg="grey80")
+        screen_info_hero_magic_protectionm = Label(root, text=str(info_magic_protectionm), bg="grey80")
+
+        screen_info_hero_attack.grid(row=0, column=2, sticky=W)
+        screen_info_hero_magic_attack.grid(row=1, column=2, sticky=W)
+        screen_info_hero_protection.grid(row=2, column=2, sticky=W)
+        screen_info_hero_magic_protectionm.grid(row=3, column=2, sticky=W)
+
+    def move(self):
+        if self.endurance > 0:
+            self.endurance -= random.randint(1, 4)
+        else:
+            print(self.name + "слишком сильно устал.")
+            print("Ему нужно передохнуть.")
+
+        print("--------------------------")
+    
+    def drink_a_potion_recovery(self):
+        if self.XP + 10 * self.level - 25 >= self.XP_statik  + 10 * self.level:
+            self.XP += random.randrange(10, 25)
+        else:
+            print("Достигнут предел, при котором XP не будет востанавливаться.")
+        
+        if self.endurance + 5 * self.level + 5 * self.level - 10 >= self.endurance_statik + 5 * self.level:
+            self.endurance += random.randrange(1, 10)
+        else:
+            print("Достигнут предел, при котором выносливость будет восполняться.")
+
+        print("--------------------------")
+
+    def drink_a_potion_mana(self):
+        if self.mana + 5 * self.level - 20 >= self.mana_statik + 5 * self.level:
+            self.mana += random.randrange(15, 20)
+        
+        else:
+            print("Достигнут предел, при котором мана не будет востанавливаться.")
+
+    def relax(self):
+        if self.endurance + 5 * self.level - 5 >= self.endurance_statik + 5 * self.level:
+            self.endurance += 5
+
+        else:
+            print("Достигнут предел, при котором выносливость не будет востанавливаться.")
+
+    def attack_hero(self):
+        pass
+
+    def sword(self):
+        self.level_sword = 1
+        if self.level_sword == 10:
+            self.attack += 5 + 3 * self.level_sword
+        self.attack += 2 + 2 * self.level_sword
+
+    def shield(self):
+        self.level_shield = 1
+        if self.level_shield == 6:
+            self.protection += 4 + 2 * self.level_shield
+        self.protection += 2 + 1 * self.level_shield
+
+class Warrior(Hero):
+
+    def __init__ (self, name):
+        super().__init__(name)
+
+        self.XP = 135
+        self.endurance = 70
+        self.mana = 10
+
+        self.attack = 10
+        self.magic_attack = 2
+        self.protection = 6
+
+        self.XP_statik = 135
+        self.endurance_statik = 70
+        self.mana_statik = 10
+
+        self.attack_statik = 10
+        self.magic_attack_statik = 2
+        self.protection_statik = 6
+        
+
+    def info_hero(self):
+        
+        info_name = "Имя: " + self.name
+        info_level = "Уровень: " + str(self.level)
+        info_XP = "XP: " + str(int(self.XP + 10 * self.level)) + "/" + str(int(self.XP_statik + 10 * self.level))
+        info_experience = "Опыт: " + str(self.experience)
+        info_endurance = "Выносливость: " + str(int(self.endurance + 5 * self.level)) + "/" + str(int(self.endurance_statik + 5 * self.level))
+        info_mana = "Мана: " + str(int(self.mana + 5 * self.level)) + "/" + str(int(self.mana_statik + 5 * self.level))
+
+        self.class_hero = "Класс: воин"
+
+        info_attack = "Атака: " + str(self.attack)
+        info_magic_attack ="Магическая атака: " + str(self.magic_attack)
+        info_protection = "Защита: " + str(self.protection)
+        info_magic_protectionm = "Магическая защита: " + str(self.magic_protection)
+
+        screen_info_hero_name = Label(root, text=str(info_name), bg="grey80")
+        screen_info_hero_level = Label(root, text=str(info_level), bg="grey80")
+        screen_info_hero_XP = Label(root, text=str(info_XP), bg="grey80")
+        screen_info_hero_experience = Label(root, text=str(info_experience), bg="grey80")
+        screen_info_hero_endurance = Label(root, text=str(info_endurance), bg="grey80")
+        screen_info_hero_mana = Label(root, text=str(info_mana), bg="grey80")
+        screen_info_hero_class = Label(root, text=str(self.class_hero), bg="grey80")
+
+        screen_info_hero_name.grid(row=0, column=0, sticky=W)
+        screen_info_hero_level.grid(row=1, column=0, sticky=W)
+        screen_info_hero_XP.grid(row=2, column=0, sticky=W)
+        screen_info_hero_experience.grid(row=3, column=0, sticky=W)
+        screen_info_hero_endurance.grid(row=4, column=0, sticky=W)
+        screen_info_hero_mana.grid(row=5, column=0, sticky=W)
+        screen_info_hero_class.grid(row=6, column=0, sticky=W)
+
+        screen_info_hero_attack = Label(root, text=str(info_attack), bg="grey80")
+        screen_info_hero_magic_attack = Label(root, text=str(info_magic_attack), bg="grey80")
+        screen_info_hero_protection = Label(root, text=str(info_protection), bg="grey80")
+        screen_info_hero_magic_protectionm = Label(root, text=str(info_magic_protectionm), bg="grey80")
+
+        screen_info_hero_attack.grid(row=0, column=2, sticky=W)
+        screen_info_hero_magic_attack.grid(row=1, column=2, sticky=W)
+        screen_info_hero_protection.grid(row=2, column=2, sticky=W)
+        screen_info_hero_magic_protectionm.grid(row=3, column=2, sticky=W)
+
+class Magician(Hero):
+
+    def __init__(self, name):
+        super().__init__(name)
+
+        self.XP = 70
+        self.endurance = 30
+        self.mana = 60
+
+        self.attack = 3
+        self.magic_attack = 12
+        self.protection = 1
+        self.magic_protection = 8
+
+        self.XP_statik = 70
+        self.endurance_statik = 30
+        self.mana_statik = 60
+
+        self.attack_statik = 3
+        self.magic_attack_statik = 12
+        self.protection_statik = 1
+
+    def info_hero(self):
+        
+        info_name = "Имя: " + self.name
+        info_level = "Уровень: " + str(self.level)
+        info_XP = "XP: " + str(int(self.XP + 10 * self.level)) + "/" + str(int(self.XP_statik + 10 * self.level))
+        info_experience = "Опыт: " + str(self.experience)
+        info_endurance = "Выносливость: " + str(int(self.endurance + 5 * self.level)) + "/" + str(int(self.endurance_statik + 5 * self.level))
+        info_mana = "Мана: " + str(int(self.mana + 5 * self.level)) + "/" + str(int(self.mana_statik + 5 * self.level))
+
+        self.class_hero = "Класс: маг"
+
+        info_attack = "Атака: " + str(self.attack)
+        info_magic_attack ="Магическая атака: " + str(self.magic_attack)
+        info_protection = "Защита: " + str(self.protection)
+        info_magic_protectionm = "Магическая защита: " + str(self.magic_protection)
+
+        screen_info_hero_name = Label(root, text=str(info_name), bg="grey80")
+        screen_info_hero_level = Label(root, text=str(info_level), bg="grey80")
+        screen_info_hero_XP = Label(root, text=str(info_XP), bg="grey80")
+        screen_info_hero_experience = Label(root, text=str(info_experience), bg="grey80")
+        screen_info_hero_endurance = Label(root, text=str(info_endurance), bg="grey80")
+        screen_info_hero_mana = Label(root, text=str(info_mana), bg="grey80")
+        screen_info_hero_class = Label(root, text=str(self.class_hero), bg="grey80")
+
+        screen_info_hero_name.grid(row=0, column=0, sticky=W)
+        screen_info_hero_level.grid(row=1, column=0, sticky=W)
+        screen_info_hero_XP.grid(row=2, column=0, sticky=W)
+        screen_info_hero_experience.grid(row=3, column=0, sticky=W)
+        screen_info_hero_endurance.grid(row=4, column=0, sticky=W)
+        screen_info_hero_mana.grid(row=5, column=0, sticky=W)
+        screen_info_hero_class.grid(row=6, column=0, sticky=W)
+
+        screen_info_hero_attack = Label(root, text=str(info_attack), bg="grey80")
+        screen_info_hero_magic_attack = Label(root, text=str(info_magic_attack), bg="grey80")
+        screen_info_hero_protection = Label(root, text=str(info_protection), bg="grey80")
+        screen_info_hero_magic_protectionm = Label(root, text=str(info_magic_protectionm), bg="grey80")
+
+        screen_info_hero_attack.grid(row=0, column=2, sticky=W)
+        screen_info_hero_magic_attack.grid(row=1, column=2, sticky=W)
+        screen_info_hero_protection.grid(row=2, column=2, sticky=W)
+        screen_info_hero_magic_protectionm.grid(row=3, column=2, sticky=W)    
+        
+class wolf():
+    
+    def __init__(self):
+        self.attack_wolf = random.randint(7, 11)
+        self.protection_wolf = 2
+        self.level_wolf = 0 
+        self.XP_wolf = 50
+
+        self.XP_wolf_statik = 50
+
+class Bat():
+
+    def __init__(self, Text, x_place, y_place):
+
+        self.Text = Text
+        bat = Button(text=str(Text), width=19, height=1)
+
+        self.x_place = x_place
+        self.y_place = y_place
+        bat.place(x=x_place, y=y_place)
+
+root = Tk()
+root.resizable(width = False, height = False)
+root.geometry("680x460")
+root.title("Hero: text RPG")
+root["bg"] = "grey80"
+
+batton_attack = Bat("Атаковать", 5, 220)
+batton_way_attack = Bat("Поменять способ атаки", 5, 160)
+batton_GoBack = Bat("Отступить", 5, 250)
+batton_run = Bat("Убежать", 5, 280)
+
+batton_run = Bat("Следующий ход", 5, 330)
+batton_inventory = Bat("Инвентарь", 5, 360)
+batton_skills = Bat("Навыки", 5, 390)
+
+consol = Text(root, width=30, font="12", bg="lightgray")
+consol.place(x=390, y=0)
+
+my_hero_1 = Warrior("Alex")
+my_hero_1.info_hero()
+
+root.mainloop()
